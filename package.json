@@ -1,0 +1,51 @@
+{
+  "name": "voidai",
+  "productName": "VoidAI",
+  "version": "1.0.0",
+  "description": "An AI desktop assistant with vision, voice, memory, and multi-provider AI support.",
+  "author": "AgentXCO2-Dev",
+  "license": "MIT",
+  "private": true,
+  "main": "dist-electron/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"vite\" \"wait-on tcp:5173 && electron .\"",
+    "dev:react": "vite",
+    "dev:electron": "wait-on tcp:5173 && electron .",
+    "build": "tsc && vite build",
+    "build:react": "vite build",
+    "build:electron": "tsc -p electron/tsconfig.json",
+    "dist": "npm run build && npm run build:electron && electron-builder",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist dist-electron release",
+    "start": "electron ."
+  },
+  "build": {
+    "appId": "com.voidedstudios.voidai",
+    "productName": "VoidAI",
+    "directories": {
+      "output": "release"
+    },
+    "files": ["dist/**/*", "dist-electron/**/*", "package.json"],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
